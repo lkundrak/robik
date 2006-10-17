@@ -36,7 +36,7 @@ sub command
 	$_ = shift;
 
 	/^wtf\s+(.*)/ and return wtf ($1);
-	/^version/ and return '$Id: robik.pl,v 1.4 2006/10/11 19:07:09 lkundrak Exp lkundrak $';
+	/^version/ and return '$Id$';
 #	/^join\s+(\S+)$/ and return $conn->join ($1);
 #	/^part\s+(\S+)\s*(\S*)$/ and return $conn->part ("$1 $2");
 #	/^quit\s+(\S*)$/ and return $conn->quit ("$1 $2");
