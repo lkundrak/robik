@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# NetBSD.sk bot
+# $Id$
 
 use warnings;
 use strict;
@@ -7,7 +9,7 @@ use Net::IRC;
 
 my $Ubiq = 'Ubiq';
 my $Revi = 'Revi';
-my $me = 'robik';
+my $me = 'gerda';
 
 my $irc = new Net::IRC;
 my $conn = $irc->newconn (
@@ -22,13 +24,13 @@ $conn->add_default_handler(\&logit);
 # nicknameinuse endofmotd motd 
 
 $conn->join ('#testbed');
-$conn->join ('#NetBSD.sk');
+#$conn->join ('#NetBSD.sk');
 
 sub wtf
 {
 	my $argument = shift;
 	$argument =~ s/\'//g;
-	`ssh elvraba.edu.sk PATH=/usr/games:/bin:/usr/bin:/usr/sbin wtf '$argument' 2>&1`;
+	`PATH=/usr/games:/bin:/usr/bin:/usr/sbin wtf '$argument' 2>&1`;
 }
 
 sub command
@@ -36,7 +38,7 @@ sub command
 	$_ = shift;
 
 	/^wtf\s+(.*)/ and return wtf ($1);
-	/^version/ and return '$Id$';
+	/^version/ and return '$Revision$';
 #	/^join\s+(\S+)$/ and return $conn->join ($1);
 #	/^part\s+(\S+)\s*(\S*)$/ and return $conn->part ("$1 $2");
 #	/^quit\s+(\S*)$/ and return $conn->quit ("$1 $2");
@@ -82,10 +84,10 @@ sub msg
 		$response = ''; # not a command
 
 		if ($wtf =~ /^wtf,/) {
-			answer ($to, $caller, "naozaj nevedia");
+			answer ($to, $caller, "Skutocne nevedia.");
 		} else {
  			$conn->privmsg ($Revi, "wtf $arg = $wtf");
-			answer ($to, $caller, "skus teraz, teraz uz mozno vedia");
+			answer ($to, $caller, "Skus teraz, teraz uz mozno vedia.");
 		}
 	}
 
