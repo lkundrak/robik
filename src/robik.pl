@@ -6,6 +6,7 @@ use warnings;
 use strict;
 
 use Net::IRC;
+use POSIX;
 
 my $Ubiq = 'Ubiq';
 my $Revi = 'Revi';
@@ -101,8 +102,7 @@ sub logit
 	my $date = `date '+%D %T'`;
 	chomp $date;
 	
-	print $event->type."\n";
-	open (LOG, '>>robik.log');
+	open (LOG, '>>/tmp/robik.log');
 	print LOG $date.' '.$event->type.":\t";
 	foreach ($event->args) {
 		print LOG "\t$_";
@@ -111,4 +111,15 @@ sub logit
 	close (LOG);
 }
 
+sub daemonize {
+	chdir ('/');
+	open (STDIN, '/dev/null');
+	open (STDOUT, '>>/dev/null');
+	open (STDERR, '>>/dev/null');
+
+    	fork () and exit (0);
+	POSIX::setsid ();
+}
+
+daemonize ();
 $irc->start ();
