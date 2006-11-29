@@ -25,7 +25,7 @@ $conn->add_default_handler(\&logit);
 # nicknameinuse endofmotd motd 
 
 $conn->join ('#testbed');
-#$conn->join ('#NetBSD.sk');
+$conn->join ('#NetBSD.sk');
 
 sub wtf
 {
@@ -45,7 +45,7 @@ sub command
 #	/^quit\s+(\S*)$/ and return $conn->quit ("$1 $2");
 	/^say\s+(\S+)\s*(.*)$/ and return $conn->privmsg ($1, $2);
 
-	'(Not Understood)';
+	'Hlupemu dietatu ani vlastna matka nerozumie.';
 }
 
 sub answer
