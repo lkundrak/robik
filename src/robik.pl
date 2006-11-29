@@ -4,13 +4,14 @@
 
 use warnings;
 use strict;
+use config;
 
 use Net::IRC;
 use POSIX;
 
-my $Ubiq = 'Ubiq';
-my $Revi = 'Revi';
-my $me = 'gerda';
+my $Ubiq = $config::Ubiqs[0];
+my $Revi = $config::Revis[0];
+my $me = $config::nicks[0];
 
 my $irc = new Net::IRC;
 my $conn = $irc->newconn (
@@ -24,8 +25,7 @@ $conn->add_handler('msg', \&msg);
 $conn->add_default_handler(\&logit);
 # nicknameinuse endofmotd motd 
 
-$conn->join ('#testbed');
-$conn->join ('#NetBSD.sk');
+$conn->join ($_) foreach (@config::channels);
 
 sub wtf
 {
