@@ -8,6 +8,7 @@ use config;
 
 use Net::IRC;
 use POSIX;
+use Weather::Underground;
 
 my $Ubiq = $config::Ubiqs[0];
 my $Revi = $config::Revis[0];
@@ -27,6 +28,52 @@ $conn->add_default_handler(\&logit);
 
 $conn->join ($_) foreach (@config::channels);
 
+sub weather
+{
+	my $argument = shift;
+	my $retval;
+
+	unless ($argument) {
+		return "Skus takto: weather <miesto>";
+	}
+    
+	my $weather = Weather::Underground->new (
+		'place'	=> $argument,
+		'debug'	=> 0,
+	);
+
+	my $places = $weather->get_weather ()
+		or return 'Nemozem scucnut info pre toto miesto';
+
+	foreach my $place (@{$places}) {
+		$retval .= sprintf (
+
+			" * %s: %s \xb0C, %s, Vietor %s Km/h (%s)\n".
+			"   Slnko: %s - %s (Velke okruhle)\n".
+			"   Mesiac: %s - %s (%s)\n".
+			"   Viditelnost: %s Km. [%s]\n",
+
+			$place->{'place'},
+			$place->{'temperature_celsius'},
+			$place->{'conditions'},
+			$place->{'wind_kilometersperhour'},
+			$place->{'wind_direction'},
+
+			$place->{'sunrise'},
+			$place->{'sunset'},
+			$place->{'moonrise'},
+			$place->{'moonset'},
+			$place->{'moonphase'},
+
+			$place->{'visibility_kilometers'},
+			$place->{'updated'},
+
+			#$place->{''},
+		);
+	}
+	return $retval;
+}
+
 sub wtf
 {
 	my $argument = shift;
@@ -40,6 +87,10 @@ sub command
 
 	/^wtf\s+(.*)/ and return wtf ($1);
 	/^version/ and return '$Revision$';
+	/^weather\s+(.*)/ and return weather ($1);
+	/^weather/ and return
+		weather ('Brno, Czech Republic').
+		weather ('Bratislava, Slovakia');
 #	/^join\s+(\S+)$/ and return $conn->join ($1);
 #	/^part\s+(\S+)\s*(\S*)$/ and return $conn->part ("$1 $2");
 #	/^quit\s+(\S*)$/ and return $conn->quit ("$1 $2");
