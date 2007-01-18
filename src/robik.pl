@@ -28,13 +28,13 @@ $conn->add_default_handler(\&logit);
 
 $conn->join ($_) foreach (@config::channels);
 
-sub weather
+sub pocasie
 {
 	my $argument = shift;
 	my $retval;
 
 	unless ($argument) {
-		return "Skus takto: weather <miesto>";
+		return "Skus takto: pocasie <miesto>";
 	}
     
 	my $weather = Weather::Underground->new (
@@ -61,8 +61,8 @@ sub weather
 
 			$place->{'sunrise'},
 			$place->{'sunset'},
-			$place->{'moonrise'},
 			$place->{'moonset'},
+			$place->{'moonrise'},
 			$place->{'moonphase'},
 
 			$place->{'visibility_kilometers'},
@@ -87,10 +87,10 @@ sub command
 
 	/^wtf\s+(.*)/ and return wtf ($1);
 	/^version/ and return '$Revision$';
-	/^weather\s+(.*)/ and return weather ($1);
-	/^weather/ and return
-		weather ('Brno, Czech Republic').
-		weather ('Bratislava, Slovakia');
+	/^pocasie\s+(.*)/ and return pocasie ($1);
+	/^pocasie/ and return
+		pocasie ('Brno, Czech Republic').
+		pocasie ('Bratislava, Slovakia');
 #	/^join\s+(\S+)$/ and return $conn->join ($1);
 #	/^part\s+(\S+)\s*(\S*)$/ and return $conn->part ("$1 $2");
 #	/^quit\s+(\S*)$/ and return $conn->quit ("$1 $2");
