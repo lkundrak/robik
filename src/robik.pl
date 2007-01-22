@@ -34,7 +34,7 @@ sub usermode
 	my ($chan, $nick, $ident) = @_;
 
 	foreach my $op_match (@config::ops) {
-		if ($ident eq $op_match) {
+		if ($ident =~ $op_match) {
 			$conn->mode ($chan, '+o', $nick);
 		}		
 	}
