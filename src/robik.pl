@@ -16,17 +16,39 @@ my $me = $config::nicks[0];
 
 my $irc = new Net::IRC;
 my $conn = $irc->newconn (
-	'Nick'		=> $me,
-	'Server'	=> 'irc.nextra.sk',
+	'Nick'		=> "^$me",
+	'Server'	=> 'irc.upc.cz',
 	'Ircname'	=> 'Robert Fico',
 );
 
 $conn->add_handler('public', \&msg);
 $conn->add_handler('msg', \&msg);
+$conn->add_handler('join', \&onjoin);
 $conn->add_default_handler(\&logit);
-# nicknameinuse endofmotd motd 
+# nicknameinuse endofmotd motd topic
 
 $conn->join ($_) foreach (@config::channels);
+
+sub usermode
+{
+	my ($chan, $nick, $ident) = @_;
+
+	foreach my $op_match (@config::ops) {
+		if ($ident eq $op_match) {
+			$conn->mode ($chan, '+o', $nick);
+		}		
+	}
+}
+
+sub onjoin
+{
+	my ($conn, $event) = @_;
+	my $chan = ($event->to)[0];
+	my $nick = $event->nick;
+	my $ident = $event->userhost;
+
+	usermode ($chan, $nick, $ident);
+}
 
 sub pocasie
 {
@@ -96,7 +118,7 @@ sub command
 #	/^quit\s+(\S*)$/ and return $conn->quit ("$1 $2");
 	/^say\s+(\S+)\s*(.*)$/ and return $conn->privmsg ($1, $2);
 
-	'Hlupemu dietatu ani vlastna matka nerozumie.';
+	'Bad command or filename.';
 }
 
 sub answer
