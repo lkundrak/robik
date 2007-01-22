@@ -6,7 +6,7 @@ use strict;
 
 @config::Ubiqs = ('Ubiq');
 @config::Revis = ('Revi');
-@config::nicks = ('gerda', 'robik');
+@config::nicks = ('gerda-test', 'robik');
 @config::channels = ('#testbed', '#NetBSD.sk');
 @config::server = 'irc.upc.cz';
 @config::ircname = 'Robert Fico';
@@ -27,7 +27,8 @@ use strict;
 	'ado@cloudlet.imladris.sk',
 	'crude@tarantula.valec.net',
 	'~mato@adsl-098-015-036.dsl.nextra.sk',
-	'~alex@roa76-1-87-91-109-9.dsl.club-internet.fr',
+	'alex@.*.dsl.club-internet.fr',
+	'~sine@158.195.99.101',
 );
 
 1;
