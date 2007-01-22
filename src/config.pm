@@ -10,7 +10,6 @@ use strict;
 @config::channels = ('#testbed', '#NetBSD.sk');
 @config::server = 'irc.upc.cz';
 @config::ircname = 'Robert Fico';
-);
 
 @config::ops = (
 	'~xyzz@147.175.55.175',
