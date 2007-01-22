@@ -8,6 +8,10 @@ use strict;
 @config::Revis = ('Revi');
 @config::nicks = ('gerda', 'robik');
 @config::channels = ('#testbed', '#NetBSD.sk');
+@config::server = 'irc.upc.cz';
+@config::ircname = 'Robert Fico';
+);
+
 @config::ops = (
 	'~xyzz@147.175.55.175',
 	'~lkundrak@147.175.55.175',

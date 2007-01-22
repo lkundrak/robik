@@ -16,9 +16,9 @@ my $me = $config::nicks[0];
 
 my $irc = new Net::IRC;
 my $conn = $irc->newconn (
-	'Nick'		=> "^$me",
-	'Server'	=> 'irc.upc.cz',
-	'Ircname'	=> 'Robert Fico',
+	'Nick'		=> $me,
+	'Server'	=> @config::server,
+	'Ircname'	=> @config::ircname,
 );
 
 $conn->add_handler('public', \&msg);
