@@ -27,8 +27,9 @@ use strict;
 	'ado@cloudlet.imladris.sk',
 	'crude@tarantula.valec.net',
 	'~mato@adsl.*.dsl.nextra.sk',
-	'~alex@roa.*.dsl.club-internet.fr',
+	'~al.*@roa.*.dsl.club-internet.fr',
 	'~sine@158.195.99.101',
+	'~sine@213.151.251.83',
 );
 
 1;
