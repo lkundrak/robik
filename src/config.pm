@@ -32,6 +32,7 @@ use strict;
 	'~sine@213.151.251.83',
 	'waicak@.*vutbr.cz',
 	'norbert@vcielka.rec.uniba.sk',
+	'~fefo@84.16.39.226',
 );
 
 1;
