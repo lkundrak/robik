@@ -100,7 +100,7 @@ sub wtf
 {
 	my $argument = shift;
 	$argument =~ s/\'//g;
-	`PATH=/usr/games:/bin:/usr/bin:/usr/sbin wtf '$argument' 2>&1`;
+	`PATH=/usr/games:/bin:/usr/bin:/usr/sbin wtf '$argument' 2>&1 |head -n1`;
 }
 
 sub command
