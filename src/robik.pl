@@ -167,7 +167,7 @@ sub msg
 
 	if (/(youtube|video.google.com|swf)/i) {
 		unless ($to eq $me) {
- 			answer ($to, $from, "jelito");
+ 			answer ($from, $from, "Skus si to s flashom rozmysliet");
 			$conn->kick ($to, $from, 'flash');
 		}
 	}
