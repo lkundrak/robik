@@ -6,8 +6,8 @@ use strict;
 
 @config::Ubiqs = ('Ubiq');
 @config::Revis = ('Revi');
-@config::nicks = ('Xgerda', 'Xrobik');
-@config::channels = ('#testbed');
+@config::nicks = ('gerda', 'robik');
+@config::channels = ('#netbsd.sk', '#include');
 @config::server = 'irc.upc.cz';
 @config::ircname = 'Robert Fico';
 
