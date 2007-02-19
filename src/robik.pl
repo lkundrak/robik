@@ -165,6 +165,13 @@ sub msg
 		}
 	}
 
+	if (/(youtube|video.google.com|swf)/i) {
+		unless ($to eq $me) {
+ 			answer ($to, $from, "jelito");
+			$conn->kick ($to, $from, 'flash');
+		}
+	}
+
 	answer ($to, $from, $response);
 }
 
