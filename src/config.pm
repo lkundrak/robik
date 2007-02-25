@@ -33,6 +33,7 @@ use strict;
 	'waicak@.*vutbr.cz',
 	'norbert@vcielka.rec.uniba.sk',
 	'~fefo@84.16.39.226',
+	'.*sativa.morph.sk',
 );
 
 1;
