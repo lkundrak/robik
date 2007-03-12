@@ -31,6 +31,7 @@ use strict;
 	'~sine@158.195.99.101',
 	'~sine@213.151.251.83',
 	'waicak@.*vutbr.cz',
+	'~waico@mail.ui42.sk',
 	'norbert@vcielka.rec.uniba.sk',
 	'~fefo@84.16.39.226',
 	'.*sativa.morph.sk',
