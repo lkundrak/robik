@@ -13,13 +13,20 @@ use Weather::Underground;
 my $Ubiq = $config::Ubiqs[0];
 my $Revi = $config::Revis[0];
 my $me = $config::nicks[0];
+my $buddy = $config::buddies[0];
+my $degug = $config::degug;
 
 my $irc = new Net::IRC;
 my $conn = $irc->newconn (
 	'Nick'		=> $me,
-	'Server'	=> @config::server,
-	'Ircname'	=> @config::ircname,
+	'Server'	=> $config::server,
+	'Ircname'	=> $config::ircname,
 );
+
+my $pyxel_old = undef;
+my $pyxel_new = undef;
+my $pyxel_break = 'pyxel broke it';
+my $pyxel_chan = undef;
 
 $conn->add_handler('public', \&msg);
 $conn->add_handler('msg', \&msg);
@@ -103,6 +110,12 @@ sub wtf
 	`PATH=/usr/games:/bin:/usr/bin:/usr/sbin wtf '$argument' 2>&1 |head -n1`;
 }
 
+sub break
+{
+	$pyxel_new = shift;
+	$conn->privmsg ($Revi, "wtf $pyxel_break");
+}
+
 sub command
 {
 	$_ = shift;
@@ -110,6 +123,7 @@ sub command
 	/^wtf\s+(.*)/ and return wtf ($1);
 	/^version/ and return '$Revision$';
 	/^pocasie\s+(.*)/ and return pocasie ($1);
+	/^break\s+(.*)/ and return break ($1);
 	/^pocasie/ and return
 		pocasie ('Brno, Czech Republic').
 		pocasie ('Bratislava, Slovakia');
@@ -123,14 +137,14 @@ sub command
 
 sub answer
 {
-	my ($to, $from, $text) = @_;
+	my ($where, $whom, $text) = @_;
 	my @text = split /\n/,$text;
 
 	foreach (@text) {
-		if ($to eq $me) {	# query
-	 		$conn->privmsg ($from, $_);
+		if ($where eq $me) {	# query
+	 		$conn->privmsg ($whom, $_);
 		} else {		# channel
-		 	$conn->privmsg ($to, "$from: $_");
+		 	$conn->privmsg ($where, "$whom: $_");
 		}
 	}
 }
@@ -142,6 +156,10 @@ sub msg
 	my ($to) = $event->to;
 	my $from = $event->nick;
 	my $response = '';
+
+	if ($degug) {
+		print "MSG $from -> $to: $message\n";
+	}
 
 	$_ = $message;
 
@@ -168,7 +186,7 @@ sub msg
 	if (/\ (\!|\?)/) {
 		unless ($to eq $me) {
  			answer ($to, $from, "Pyxel!");
-			$conn->kick ($to, $from, 'flash');
+			$conn->kick ($to, $from, 'pyxel');
 		}
 	}
 
@@ -179,6 +197,19 @@ sub msg
 		}
 	}
 
+	if ($pyxel_new and not $pyxel_chan) {
+		$pyxel_chan = $to;
+	}
+	if (/\* pyxel broke it = (.*)  \[added by/) {
+		$pyxel_old = $1;
+		if ($pyxel_new) {
+			$pyxel_old .= " | $pyxel_new";
+			$conn->privmsg ($Revi, "wtf $pyxel_break = $pyxel_old");
+			answer ($pyxel_chan, $Revi, "wtf $pyxel_break");
+			$pyxel_new = $pyxel_chan = undef;
+		}
+	}
+
 	answer ($to, $from, $response);
 }
 
@@ -186,16 +217,21 @@ sub logit
 {
 	my ($conn, $event) = @_;
 
-	my $date = `date '+%D %T'`;
-	chomp $date;
+	my $date = `date '+%D %T'`; chomp $date;
+	my $logline = "$date ".$event->type.":\t";
 	
-	open (LOG, '>>/tmp/robik.log');
-	print LOG $date.' '.$event->type.":\t";
 	foreach ($event->args) {
-		print LOG "\t$_";
+		$logline .= "\t$_";
 	}
-	print LOG "\n";
-	close (LOG);
+	$logline .= "\n";
+
+	if ($degug) {
+		print $logline;
+	} else {
+		open (LOG, '>>/tmp/robik.log');
+		print LOG $logline;
+		close (LOG);
+	}
 }
 
 sub daemonize {
@@ -208,5 +244,5 @@ sub daemonize {
 	POSIX::setsid ();
 }
 
-daemonize ();
+daemonize () unless $degug;
 $irc->start ();

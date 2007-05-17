@@ -6,17 +6,22 @@ use strict;
 
 @config::Ubiqs = ('Ubiq');
 @config::Revis = ('Revi');
-@config::nicks = ('gerda', 'robik');
-@config::channels = ('#netbsd.sk', '#include');
-@config::server = 'irc.upc.cz';
-@config::ircname = 'Robert Fico';
+$config::server = 'irc.upc.cz';
+$config::ircname = 'Robert Fico';
+@config::buddies = ('_8086');
+
+if ($config::degug = 0) {
+	@config::nicks = ('degug');
+	@config::channels = ('#testbed');
+} else {
+	@config::nicks = ('gerda', 'robik');
+	@config::channels = ('#netbsd.sk', '#include');
+}
 
 @config::ops = (
 	'~xyzz@147.175.55.175',
 	'~lkundrak@147.175.55.175',
 	'~pyxel@147.175.55.175',
-	'pyxel@193.87.19.130',
-	'xyzz@193.87.19.130',
 	'~e1m1@muff.zlo.sk',
 	'~fellow@stezka.nettel.cz',
 	'fatboy@195.168.3.218',
@@ -35,6 +40,7 @@ use strict;
 	'.*@stip-static-48.213-81-186.telecom.sk',
 	'.*@support7.cust.nextra.sk',
 	'.*sativa.morph.sk',
+	'.*@193.87.19.130',
 	'fellow@amee.nettel.cz',
 	'crg@lagoon.freebsd.lublin.pl',
 	'potion@morphium.synapsia.org',
