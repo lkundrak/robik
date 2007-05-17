@@ -205,7 +205,7 @@ sub msg
 		if ($pyxel_new) {
 			$pyxel_old .= " | $pyxel_new";
 			$conn->privmsg ($Revi, "wtf $pyxel_break = $pyxel_old");
-			answer ($pyxel_chan, $Revi, "wtf $pyxel_break");
+			$conn->privmsg ($pyxel_chan, "wtf $pyxel_break");
 			$pyxel_new = $pyxel_chan = undef;
 		}
 	}
