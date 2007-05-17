@@ -165,9 +165,16 @@ sub msg
 		}
 	}
 
+	if (/\ (\!|\?)/) {
+		unless ($to eq $me) {
+ 			answer ($to, $from, "Pyxel!");
+			$conn->kick ($to, $from, 'flash');
+		}
+	}
+
 	if (/(youtube|video.google.com|swf)/i) {
 		unless ($to eq $me) {
- 			answer ($from, $from, "Skus si to s flashom rozmysliet");
+ 			answer ($to, $from, "Skus si to s flashom rozmysliet");
 			$conn->kick ($to, $from, 'flash');
 		}
 	}
