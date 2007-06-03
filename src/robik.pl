@@ -132,6 +132,13 @@ sub command
 #	/^quit\s+(\S*)$/ and return $conn->quit ("$1 $2");
 	/^say\s+(\S+)\s*(.*)$/ and return $conn->privmsg ($1, $2);
 
+	my @odzdrav = ('ahoj', 'kwik', 'kwak', 'kwok', 'mnau',
+		'cau', 'zbohom', 'Dobry den prajem!');
+
+	foreach my $pozdrav (@odzdrav) {
+		/$pozdrav/ and return ^$odzdrav[rand(@odzdrav)];
+	}
+
 	'Bad command or filename.';
 }
 
