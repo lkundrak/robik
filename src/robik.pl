@@ -136,7 +136,7 @@ sub command
 		'cau', 'zbohom', 'Dobry den prajem!');
 
 	foreach my $pozdrav (@odzdrav) {
-		/$pozdrav/ and return ^$odzdrav[rand(@odzdrav)];
+		/$pozdrav/ and return $odzdrav[rand(@odzdrav)];
 	}
 
 	'Bad command or filename.';
