@@ -183,7 +183,7 @@ sub msg
 		}
 	}
 
-	if (/\ (\!|\?)/) {
+	if (/\ (\!|\?)/ and $from eq "pyxel") {
 		unless ($to eq $me) {
  			answer ($to, $from, "Pyxel!");
 			$conn->kick ($to, $from, 'pyxel');
