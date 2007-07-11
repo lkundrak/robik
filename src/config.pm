@@ -38,7 +38,7 @@ if ($config::degug = 0) {
 	'norbert@vcielka.rec.uniba.sk',
 	'~fefo@84.16.39.226',
 	'.*@stip-static-48.213-81-186.telecom.sk',
-	'.*@support7.cust.nextra.sk',
+	'.*@norkia.kexik.net',
 	'.*sativa.morph.sk',
 	'.*@193.87.19.130',
 	'fellow@amee.nettel.cz',
